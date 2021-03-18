@@ -1,0 +1,250 @@
+package doubleLInkedList;
+
+import java.util.Scanner;
+
+public class KiDoublell {
+
+	Node head; // head of list
+	/* Doubly Linked list Node */
+
+	class Node {
+		int data;
+		Node prev;
+		Node next;
+
+		// Constructor to create a new node
+		// next and prev is by default initialized as null
+		Node(int d) {
+			data = d;
+			prev = null;
+			next = null;
+		}
+	}
+
+	static KiDoublell dll = new KiDoublell();
+	static Scanner scanner = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		/* Start with the empty list */
+
+		while (true) {
+			System.out.println("Press 'P'  to add elements to Doubly linkedList");
+			System.out.println("Press 'A'  to Append to Doubly linkedList");
+			System.out.println("Press 'D'  to display Doubly linkedList");
+			System.out.println("Press 'IA' to insert after Doubly linkedList head");
+			System.out.println("Press 'DN' to delete head node");
+			System.out.println("Press 'DP' to delete node at a given position");
+			System.out.println("Press 'Q'  to Exit from the program");
+			String choice = scanner.next();
+			switch (choice) {
+			case "P":
+			case "p":
+				dll.push();
+				break;
+			case "A":
+			case "a":
+				System.out.println("type value that you want to append..");
+				int value3 = scanner.nextInt();
+				dll.append(value3);
+				break;
+			case "D":
+			case "d":
+				dll.display(dll.head);
+				break;
+			case "IA":
+			case "ia":
+				System.out.println("type value that you want to insert after head node..");
+				int value = scanner.nextInt();
+				dll.insertAfter(dll.head.next, value);
+				break;
+			case "DN":
+			case "dn":
+				dll.deleteNode(dll.head);
+				break;
+			case "DP":
+			case "dp":
+				System.out.println("index of node that you want to delete(node index start from 1)");
+				int value2 = scanner.nextInt();
+				dll.deleteNodeAtGivenPos(value2);
+			case "Q":
+			case "q":
+				System.exit(0);
+			default:
+				System.out.println("please press the correct keyword again.");
+			}
+		}
+
+	}
+
+	public void push() {
+		String answer = "y";
+		do {
+			System.out.println("please enter integer value elements into your doubly linkedlist");
+			int value = scanner.nextInt();
+			Node new_Node = new Node(value);
+
+			/* 3. Make next of new node as head and previous as NULL */
+			new_Node.next = head;
+			new_Node.prev = null;
+
+			/* 4. change prev of head node to new node */
+			if (head != null)
+				head.prev = new_Node;
+
+			/* 5. move the head to point to the new node */
+			head = new_Node;
+
+			System.out.println("want to add more? press 'Y' for yes ,'N' for no");
+			answer = scanner.next();
+		} while ((answer.equalsIgnoreCase("Y")) || (answer.equalsIgnoreCase("y")));
+
+		System.out.println("value added successfully");
+		return;
+	}
+
+	public void append(int append) {
+		/*
+		 * 1. allocate node 2. put in the data
+		 */
+		Node new_node = new Node(append);
+
+		Node last = head; /* used in step 5 */
+
+		/*
+		 * 3. This new node is going to be the last node, so make next of it as NULL
+		 */
+		new_node.next = null;
+
+		/*
+		 * 4. If the Linked List is empty, then make the new node as head
+		 */
+		if (head == null) {
+			new_node.prev = null;
+			head = new_node;
+			return;
+		}
+
+		/* 5. Else traverse till the last node */
+		while (last.next != null)
+			last = last.next;
+
+		/* 6. Change the next of last node */
+		last.next = new_node;
+
+		/* 7. Make last node as previous of new node */
+		new_node.prev = last;
+		System.out.println("value successfully appended");
+		return;
+	}
+
+	public void display(Node node) {
+		Node last = null;
+		System.out.println("Traversal in forward Direction");
+		while (node != null) {
+			System.out.print(node.data + " ");
+			last = node;
+			node = node.next;
+		}
+		System.out.println();
+		System.out.println("Traversal in reverse direction");
+		while (last != null) {
+			System.out.print(last.data + " ");
+			last = last.prev;
+		}
+		System.out.println();
+		return;
+	}
+
+	/*
+	 * Given a node as prev_node, insert a new node after the given node
+	 */
+	public void insertAfter(Node prev_Node, int new_data) {
+
+		/* 1. check if the given prev_node is NULL */
+		if (prev_Node == null) {
+			System.out.println("The given previous node cannot be NULL ");
+			return;
+		}
+
+		/*
+		 * 2. allocate node 3. put in the data
+		 */
+		Node new_node = new Node(new_data);
+
+		/* 4. Make next of new node as next of prev_node */
+		new_node.next = prev_Node.next;
+
+		/* 5. Make the next of prev_node as new_node */
+		prev_Node.next = new_node;
+
+		/* 6. Make prev_node as previous of new_node */
+		new_node.prev = prev_Node;
+
+		/* 7. Change previous of new_node's next node */
+		if (new_node.next != null)
+			new_node.next.prev = new_node;
+
+		return;
+	}
+
+	void deleteNode(Node del) {
+
+		// Base case
+		if (head == null || del == null) {
+			return;
+		}
+
+		// If node to be deleted is head node
+		if (head == del) {
+			head = del.next;
+		}
+
+		// Change next only if node to be deleted
+		// is NOT the last node
+		if (del.next != null) {
+			del.next.prev = del.prev;
+		}
+
+		// Change prev only if node to be deleted
+		// is NOT the first node
+		if (del.prev != null) {
+			del.prev.next = del.next;
+		}
+
+		// Finally, free the memory occupied by del
+		System.out.println("deleted.");
+		return;
+	}
+
+	void deleteNodeAtGivenPos(int n) {
+		/*
+		 * if list in NULL or invalid position is given
+		 */
+		if (head == null || n <= 0)
+			return;
+
+		Node current = head;
+		int i;
+
+		/*
+		 * traverse up to the node at position 'n' from the beginning
+		 */
+		for (i = 1; current != null && i < n; i++) {
+			current = current.next;
+		}
+
+		// if 'n' is greater than the number of nodes
+		// in the doubly linked list
+		if (current == null)
+			return;
+
+		// delete the node pointed to by 'current'
+		deleteNode(current);
+		System.out.println("deleted.");
+		return;
+	}
+
+	// This function prints contents of
+	// linked list starting from the given node
+
+}

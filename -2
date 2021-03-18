@@ -1,0 +1,102 @@
+package stack;
+
+import java.util.*;
+
+class KiStack {
+	// Pushing element on the top of the stack
+
+	static Stack<Integer> stack = new Stack<Integer>();
+	static Scanner scanner = new Scanner(System.in);
+
+	public static void main(String[] args) {
+
+		while (true) {
+			System.out.println("Press 'PU'  to push(add) elemnt to the stack");
+			System.out.println("Press 'PO'  to pop(remove) elemnt from stack");
+			System.out.println("Press 'PE'  to display element on the top of the stack");
+			System.out.println("Press 'S'   Search element in stack");
+			System.out.println("Press 'D'   Display your stack");
+			System.out.println("Press 'Q'   to Exit from the program");
+			String choice = scanner.next();
+			switch (choice) {
+			case "PU":
+			case "pu":
+				stack_push();
+				break;
+			case "PO":
+			case "po":
+				stack_pop();
+				break;
+			case "PE":
+			case "pe":
+				stack_peek();
+				break;
+			case "S":
+			case "s":
+				System.out.println("type your search input..(should be number) ..");
+				int input = scanner.nextInt();
+				stack_search(input);
+				break;
+			case "D":
+			case "d":
+				displayStack();
+			case "Q":
+			case "q":
+				System.exit(0);
+			default:
+				System.out.println("please press the correct keyword again.");
+			}
+		}
+
+	}
+
+	static void stack_push() {
+
+		String answer = "y";
+		do {
+			System.out.println("please enter integer value elements into your stack");
+			stack.push(scanner.nextInt());
+			System.out.println("want to add more? press 'Y' for yes ,'N' for no");
+			answer = scanner.next();
+		} while ((answer.equalsIgnoreCase("Y")) || (answer.equalsIgnoreCase("y")));
+
+		return;
+	}
+
+	// Popping element from the top of the stack
+	static void stack_pop() {
+		System.out.println("Pop Operation:");
+
+		// for (int i = 0; i < stack.capacity(); i++) {
+		Integer y = (Integer) stack.pop();
+		System.out.println(y);
+		// }
+		return;
+	}
+
+	// Displaying element on the top of the stack
+	static void stack_peek() {
+		Integer element = (Integer) stack.peek();
+		System.out.println("Element on stack top: " + element);
+		return;
+	}
+
+	// Searching element in the stack
+	static void stack_search(int element) {
+		Integer pos = (Integer) stack.search(element);
+
+		if (pos == -1)
+			System.out.println("Element not found");
+		else {
+			System.out.println("Element is found at position: " + pos);
+		}
+		return;
+	}
+
+	static void displayStack() {
+		// Display stack
+		System.out.println("Elements of Stack " + stack);
+		return;
+	}
+
+}

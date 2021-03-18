@@ -1,0 +1,105 @@
+package queue;
+
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class KiQueue {
+
+	/*
+	 * Queue is an interface so we need concrete class for the declaration we can
+	 * use either PriorityQueue or LinkedList
+	 */
+	static Queue<Integer> q = new PriorityQueue<>();
+	static Scanner scanner = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		while (true) {
+			System.out.println("Press 'A'  to add elements to Queue");
+			System.out.println("Press 'R'  to remove element from Queue");
+			System.out.println("Press 'D'  to display Queue");
+			System.out.println("Press 'VH'  to view the head of Queue");
+			System.out.println("Press 'S'  to see the size of Queue");
+			System.out.println("Press 'Q'  to Exit from the program");
+			String choice = scanner.next();
+			switch (choice) {
+			case "A":
+			case "a":
+				addQueue();
+				break;
+			case "R":
+			case "r":
+				removeQueue();
+				break;
+			case "D":
+			case "d":
+				displayQueue();
+				break;
+			case "VH":
+			case "vh":
+				viewHead();
+				break;
+			case "S":
+			case "s":
+				sizeOfQueue();
+				break;
+			case "Q":
+			case "q":
+				System.exit(0);
+			default:
+				System.out.println("please press the correct keyword again.");
+			}
+		}
+	}
+
+	private static void addQueue() {
+		// Adds elements
+		// q.add(i);
+
+		String answer = "y";
+
+		do {
+			System.out.println("please enter integer value elements into your Queue");
+			q.add(scanner.nextInt());
+			System.out.println("want to add more press? 'Y' for yes ,'N' for no");
+			answer = scanner.next();
+		} while ((answer.equalsIgnoreCase("Y")) || (answer.equalsIgnoreCase("y")));
+
+		System.out.println("values added successfully");
+		return;
+	}
+
+	private static void removeQueue() {
+
+		// To remove the head of queue.
+		int remove = q.remove();
+		System.out.println("removed element-" + remove);
+		System.out.println("value successfully removed");
+		return;
+	}
+
+	private static void displayQueue() {
+
+		// Display contents of the queue.
+		System.out.println("Elements of queue " + q);
+		return;
+	}
+
+	private static void sizeOfQueue() {
+
+		// Size of the Queue
+		int size = q.size();
+		System.out.println("Size of queue =" + size);
+		return;
+	}
+
+	private static void viewHead() {
+
+		// To view the head of queue
+		int head = q.peek();
+		System.out.println("head of queue-" + head);
+		return;
+
+	}
+
+}
